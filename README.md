@@ -1,8 +1,8 @@
 # Project Base
 
-## Development
+## Helper
 
-Execute `make` or `make help` for know thats commands.
+Execute `make` or `make help` to see available commands.
 
 ```bash
 Usage:
@@ -18,6 +18,21 @@ Targets:
   help        Print help
 ```
 
+## Setup database
+
+Setup your `.env` file:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=password
+```
+
+## Setup application
+
 To run the project for the first time, run the command to build the application:
 
 ```bash
@@ -31,6 +46,14 @@ make up
 ```
 
 This command will launch the containers and run yarn to watch for any changes to the files.
+
+Your terminal will be locked.
+
+Open other terminal and execute the migration:
+
+```bash
+make migrate
+```
 
 ## Interact with containers
 
@@ -49,7 +72,7 @@ docker compose exec laravel composer install <package>
 
 ## Access the application
 
-Confirm all containers are running:
+Confirm if all containers are running:
 
 ```
 docker compose ps
