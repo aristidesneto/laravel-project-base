@@ -15,6 +15,7 @@ services:
         UID: '1000'
         NODE_VERSION: '20'
     container_name: saas-laravel
+    image: project-base
     ports:
       - '5173:5173'
     volumes:
@@ -42,9 +43,9 @@ services:
       - db_mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     ports:
       - "3306:3306"
