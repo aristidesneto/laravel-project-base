@@ -1,5 +1,6 @@
 /.phpunit.cache
-/docker/nginx/domains
+/docker/nginx/domains/*
+!/docker/nginx/domains/.gitkeep
 /node_modules
 /public/build
 /public/hot
