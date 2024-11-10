@@ -28,10 +28,11 @@ services:
     container_name: saas-nginx
     working_dir: /var/www/html/public
     ports:
-      - "8080:80"
+      - "80:80"
       - "8443:443"
     volumes:
-      - ./docker/nginx:/etc/nginx/conf.d/
+      - ./docker/nginx/conf:/etc/nginx/conf.d/
+      - ./docker/nginx/domains:/etc/domains
       - ./public:/var/www/html/public
     networks:
       - saas

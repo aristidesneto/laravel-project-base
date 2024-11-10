@@ -9,13 +9,15 @@ Usage:
   make <target>
 
 Targets:
-  up          Up containers
-  run-dev     Run application
-  down        Down containers
-  build       Build application and install dependencies
-  migrate     Execute migrations, database needs running
-  ssh-%       SSH inside container, Ex: 'make ssh-laravel' for container laravel
-  help        Print help
+  up                    Up containers
+  run-dev               Run application
+  down                  Down containers
+  build                 Build application and install dependencies
+  migrate               Execute migrations, database needs running
+  ssh-%                 SSH inside container, Ex: 'make ssh-laravel' for container laravel
+  subdomain-%           Create subdomains valids for use on application, Ex: 'make subdomain-tenant1'
+  new-database-%        Create database for new tenant, Ex: 'make new-database-tenant1'
+  help                  Print help
 ```
 
 ## Setup database
@@ -68,14 +70,33 @@ It is also possible to execute commands this way:
 
 ```bash
 docker compose exec laravel composer install <package>
+# or
+docker compose exec laravel yarn install <package>
 ```
 
-## Access the application
+## Dynamic subdomains
 
-Confirm if all containers are running:
+Nginx is configured to respond to multiple subdomains and reject invalid subdomains.
 
+To create a subdomain for your application, run the command:
+
+> Root password required for this command
+
+```bash
+# Create a subdomain called tenant1
+make subdomain-tenant1
 ```
-docker compose ps
-```
 
-The application is running: http://localhost:8080
+This command will:
+
+- create an entry in your hosts file, located at `/etc/hosts` on Linux and MacOS
+- create a file called `tenant1` inside nginx container at `/etc/domains/tenant1`
+- restart nginx container to apply configuration
+- create a database to new tenant
+
+The item 2 is necessary because there is a validation in nginx if the subdomain is valid or not, see line 7 in `./docker/nginx/conf/project-saas.conf`
+
+
+## Access application
+
+Application is running at [http://tenant1.project.local](http://tenant1.project.local)
